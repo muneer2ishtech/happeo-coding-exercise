@@ -1,4 +1,4 @@
-package fi.ishtech.happeo.happeocodingexercise;
+package fi.ishtech.happeo.codingexercise;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

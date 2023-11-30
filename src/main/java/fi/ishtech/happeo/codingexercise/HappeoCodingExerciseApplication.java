@@ -1,4 +1,4 @@
-package fi.ishtech.happeo.happeocodingexercise;
+package fi.ishtech.happeo.codingexercise;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
