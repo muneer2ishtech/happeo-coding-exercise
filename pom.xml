@@ -11,10 +11,10 @@
 	</parent>
 
 	<groupId>fi.ishtech.happeo</groupId>
-	<artifactId>happeo-coding-excercise</artifactId>
+	<artifactId>happeo-coding-exercise</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>happeo-coding-excercise</name>
+	<name>happeo-coding-exercise</name>
 	<description>Spring Boot for multiple auth providers</description>
 
 	<properties>

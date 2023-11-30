@@ -4,6 +4,6 @@ VOLUME /tmp
 
 EXPOSE 8080
 
-COPY target/happeo-coding-excercise-0.0.1-SNAPSHOT.jar happeo-coding-excercise.jar
+COPY target/happeo-coding-exercise-0.0.1-SNAPSHOT.jar happeo-coding-exercise.jar
 
-ENTRYPOINT ["java","-jar","/happeo-coding-excercise.jar"]
+ENTRYPOINT ["java","-jar","/happeo-coding-exercise.jar"]
