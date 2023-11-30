@@ -22,3 +22,5 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag muneer2ishtech/happeo_coding_exercise_springboot:0.2.0-SNAPSHOT
