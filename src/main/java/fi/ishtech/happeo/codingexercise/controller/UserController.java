@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import fi.ishtech.ekahau.codingexercise.service.UserService;
 import fi.ishtech.happeo.codingexercise.payload.request.UserProvisioningRequest;
 import fi.ishtech.happeo.codingexercise.payload.response.UserProvisioningResponse;
+import fi.ishtech.happeo.codingexercise.service.UserService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 

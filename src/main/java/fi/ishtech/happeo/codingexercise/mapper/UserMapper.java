@@ -1,4 +1,4 @@
-package fi.ishtech.ekahau.codingexercise.mapper;
+package fi.ishtech.happeo.codingexercise.mapper;
 
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;

@@ -1,4 +1,4 @@
-package fi.ishtech.ekahau.codingexercise.service;
+package fi.ishtech.happeo.codingexercise.service;
 
 import java.util.List;
 
