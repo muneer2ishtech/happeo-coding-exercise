@@ -17,6 +17,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * Controller with Rest APIs for User related operations
  *
  * @author Muneer Ahmed Syed
  */
@@ -36,10 +37,12 @@ public class UserController {
 	}
 
 	/**
-	 * @param user - {@link UserProvisioningRequest}
+	 * For provisioning new user 
+	 *
+	 * @param user           - {@link UserProvisioningRequest}
 	 * @param organisationId
 	 * @param provisionerId
-	 * @return {@link UserProvisioningResponse}
+	 * @return {@link ResponseEntity}&lt;{@link UserProvisioningResponse}&gt;
 	 */
 	@PostMapping(path = "/api/organisations/{organisationId}/provisioner/{provisionerId}/users", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserProvisioningResponse> provisionNewUser(@Valid @RequestBody UserProvisioningRequest user,
