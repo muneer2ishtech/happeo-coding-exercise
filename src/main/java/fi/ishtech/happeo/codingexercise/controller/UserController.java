@@ -47,7 +47,7 @@ public class UserController {
 				provisionerId, user.getId());
 		// TODO: validate token based on organisationId and provisionerId
 
-		UserProvisioningResponse userProvisioningResponse = userService.create(user);
+		UserProvisioningResponse userProvisioningResponse = userService.create(organisationId, user);
 
 		return ResponseEntity.ok(userProvisioningResponse);
 	}
