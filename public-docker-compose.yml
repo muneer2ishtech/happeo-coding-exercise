@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    image: postgres:15
+    container_name: happeo_coding_exercise_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: happeodb
+      POSTGRES_USER: happeouser
+      POSTGRES_PASSWORD: Eh0gK#F3
+    ports:
+       - 5432:5432
+
+  spring-boot-app:
+    image: muneer2ishtech/happeo_coding_exercise_springboot:0.2.0-SNAPSHOT
+    container_name: happeo_coding_exercise_springboot
+    ports:
+       - 8080:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://happeo_coding_exercise_postgres:5432/happeodb
+    depends_on:
+      - postgres-db
