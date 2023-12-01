@@ -21,8 +21,8 @@ import lombok.extern.slf4j.Slf4j;
  * @author Muneer Ahmed Syed
  */
 @Service
-@Slf4j
 @Transactional
+@Slf4j
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -35,15 +35,15 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 
 	@Override
-	public UserProvisioningResponse create(Long orgnisationId, Long provisionerId,
+	public UserProvisioningResponse create(Long organisationId, Long provisionerId,
 			UserProvisioningRequest userProvisioningRequest) {
 		User user = userMapper.toEntity(userProvisioningRequest);
-		user.setOrganisationId(orgnisationId);
+		user.setOrganisationId(organisationId);
 
 		user = userRepo.save(user);
 		log.debug("Created new User({})", user.getId());
 
-		createOrgProvisioner(orgnisationId, provisionerId);
+		createOrgProvisioner(organisationId, provisionerId);
 
 		return userMapper.toUserProvisioningResponse(user);
 	}
@@ -54,9 +54,9 @@ public class UserServiceImpl implements UserService {
 		log.debug("Acivated {} users of Organisation {}", result, organisationId);
 	}
 
-	private void createOrgProvisioner(Long orgnisationId, Long provisionerId) {
+	private void createOrgProvisioner(Long organisationId, Long provisionerId) {
 		OrgProvisioner orgProvisioner = new OrgProvisioner();
-		orgProvisioner.setOrganisationId(orgnisationId);
+		orgProvisioner.setOrganisationId(organisationId);
 		orgProvisioner.setProvisionerId(provisionerId);
 		orgProvisioner.setSecret("TODO");
 
