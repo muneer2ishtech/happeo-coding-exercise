@@ -9,7 +9,9 @@ import fi.ishtech.happeo.codingexercise.payload.request.UserProvisioningRequest;
 import fi.ishtech.happeo.codingexercise.payload.response.UserProvisioningResponse;
 
 /**
- * 
+ * Mapper to convert Provisioner entity to request/response payload
+ *
+ * @author Muneer Ahmed Syed
  */
 @Mapper(componentModel = "spring")
 public interface UserMapper {
