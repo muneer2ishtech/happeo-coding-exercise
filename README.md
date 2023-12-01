@@ -10,3 +10,11 @@
 
 ## Improvements
 - We can create is_org_admin in user table, as all users in an organisation can be admin, and whoever is admin will have this flag as true so they can only create secrets or activate / deactivate users in their organisation.
+
+## API Docs
+
+| Type               | HTTP  | URL                                     |
+|--------------------|-------|-----------------------------------------|
+| OpenAPI            | GET   | localhost:8080/api-docs                 |
+| Swagger            | GET   | localhost:8080/swagger-ui.html          |
+
