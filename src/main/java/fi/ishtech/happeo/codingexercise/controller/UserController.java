@@ -2,6 +2,7 @@ package fi.ishtech.happeo.codingexercise.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,7 +41,7 @@ public class UserController {
 	 * @param provisionerId
 	 * @return {@link UserProvisioningResponse}
 	 */
-	@PostMapping("/api/organisations/{organisationId}/provisioner/{provisionerId}/users")
+	@PostMapping(path = "/api/organisations/{organisationId}/provisioner/{provisionerId}/users", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserProvisioningResponse> provisionNewUser(@Valid @RequestBody UserProvisioningRequest user,
 			@PathVariable Long organisationId, @PathVariable Long provisionerId) {
 		log.debug("Provisioning request for Organisation:{}, Provisioner:{}, externalId:{}", organisationId,
