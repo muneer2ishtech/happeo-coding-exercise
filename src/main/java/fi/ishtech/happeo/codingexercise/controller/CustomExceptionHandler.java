@@ -41,8 +41,13 @@ public class CustomExceptionHandler {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, ex.getMessage()));
 		} else if (StringUtils.containsIgnoreCase(ex.getMessage(), "violates foreign key constraint")) {
+			if (StringUtils.containsIgnoreCase(ex.getMessage(), "fk_user_org_id")) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body(ErrorResponse.create(null, HttpStatus.BAD_REQUEST, "Invalid input for organisationId"));
+			} else {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 						.body(ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, ex.getMessage()));
+			}
 		} else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(ErrorResponse.create(ex, HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage()));
