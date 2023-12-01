@@ -54,7 +54,7 @@ public class User implements Serializable {
 	private Long organisationId;
 
 	@Column(nullable = true, updatable = false)
-	private Long externalId;
+	private String externalId;
 
 	@Column(name = "is_active", nullable = false)
 	private boolean isActive;
