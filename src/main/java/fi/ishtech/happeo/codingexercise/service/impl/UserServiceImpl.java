@@ -5,12 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fi.ishtech.happeo.codingexercise.entity.OrgProvisioner;
 import fi.ishtech.happeo.codingexercise.entity.User;
 import fi.ishtech.happeo.codingexercise.mapper.UserMapper;
 import fi.ishtech.happeo.codingexercise.payload.request.UserProvisioningRequest;
 import fi.ishtech.happeo.codingexercise.payload.response.UserProvisioningResponse;
-import fi.ishtech.happeo.codingexercise.repo.OrgProvisionerRepo;
 import fi.ishtech.happeo.codingexercise.repo.UserRepo;
 import fi.ishtech.happeo.codingexercise.service.UserService;
 import jakarta.transaction.Transactional;
@@ -29,9 +27,6 @@ public class UserServiceImpl implements UserService {
 	private UserRepo userRepo;
 
 	@Autowired
-	private OrgProvisionerRepo orgProvisionerRepo;
-
-	@Autowired
 	private UserMapper userMapper;
 
 	@Override
@@ -43,8 +38,6 @@ public class UserServiceImpl implements UserService {
 		user = userRepo.save(user);
 		log.debug("Created new User({})", user.getId());
 
-		createOrgProvisioner(organisationId, provisionerId);
-
 		return userMapper.toUserProvisioningResponse(user);
 	}
 
@@ -52,16 +45,6 @@ public class UserServiceImpl implements UserService {
 	public void updateAsActive(Long organisationId, List<Long> userIds) {
 		int result = userRepo.updateAsActive(organisationId, userIds);
 		log.debug("Acivated {} users of Organisation {}", result, organisationId);
-	}
-
-	private void createOrgProvisioner(Long organisationId, Long provisionerId) {
-		OrgProvisioner orgProvisioner = new OrgProvisioner();
-		orgProvisioner.setOrganisationId(organisationId);
-		orgProvisioner.setProvisionerId(provisionerId);
-		orgProvisioner.setSecret("TODO");
-
-		orgProvisioner = orgProvisionerRepo.save(orgProvisioner);
-		log.debug("Created new OrgProvisioner({})", orgProvisioner.getId());
 	}
 
 }
