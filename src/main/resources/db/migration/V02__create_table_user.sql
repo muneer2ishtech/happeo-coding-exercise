@@ -8,5 +8,6 @@ CREATE TABLE t_user (
   external_id      VARCHAR(255)      NULL,
   is_active        BOOLEAN       NOT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT fk_user_org_id  FOREIGN KEY (organisation_id) REFERENCES t_organisation(id)
+  CONSTRAINT fk_user_org_id  FOREIGN KEY (organisation_id) REFERENCES t_organisation(id),
+  CONSTRAINT uk_user_org_external_id UNIQUE (organisation_id, external_id)
 );

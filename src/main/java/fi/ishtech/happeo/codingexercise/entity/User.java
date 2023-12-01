@@ -15,12 +15,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Entity
-@Table(name = "t_user")
+@Table(name = "t_user", uniqueConstraints = @UniqueConstraint(name = "uk_user_org_external_id", columnNames = {
+		"organisation_id", "externalId" }))
 @DynamicInsert
 @DynamicUpdate
 @Data
