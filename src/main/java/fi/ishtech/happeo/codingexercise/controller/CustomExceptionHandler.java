@@ -35,15 +35,14 @@ public class CustomExceptionHandler {
 	}
 
 	@ExceptionHandler(DataIntegrityViolationException.class)
-	public ResponseEntity<ErrorResponse> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+	public ResponseEntity<?> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
 		log.error("DB Constraint failed: {}", ex.getMessage());
 		if (StringUtils.containsIgnoreCase(ex.getMessage(), "unique")) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, ex.getMessage()));
 		} else if (StringUtils.containsIgnoreCase(ex.getMessage(), "violates foreign key constraint")) {
 			if (StringUtils.containsIgnoreCase(ex.getMessage(), "fk_user_org_id")) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-						.body(ErrorResponse.create(null, HttpStatus.BAD_REQUEST, "Invalid input for organisationId"));
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid organisationId");
 			} else {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 						.body(ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, ex.getMessage()));
