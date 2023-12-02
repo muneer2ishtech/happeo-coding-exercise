@@ -2,8 +2,14 @@ package fi.ishtech.happeo.codingexercise.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+
+import fi.ishtech.happeo.codingexercise.entity.User;
 import fi.ishtech.happeo.codingexercise.payload.request.UserProvisioningRequest;
 import fi.ishtech.happeo.codingexercise.payload.response.UserProvisioningResponse;
+import fi.ishtech.happeo.codingexercise.payload.response.UserResponse;
 
 /**
  *
@@ -11,9 +17,11 @@ import fi.ishtech.happeo.codingexercise.payload.response.UserProvisioningRespons
  */
 public interface UserService {
 
-	UserProvisioningResponse create(Long orgnisationId, Long provisionerId,
+	UserProvisioningResponse create(Long organisationId, Long provisionerId,
 			UserProvisioningRequest userProvisioningRequest);
 
 	void updateAsActive(Long organisationId, List<Long> userIds);
+
+	Page<UserResponse> findAllAndMapToResponse(Specification<User> spec, Pageable pageable);
 
 }
