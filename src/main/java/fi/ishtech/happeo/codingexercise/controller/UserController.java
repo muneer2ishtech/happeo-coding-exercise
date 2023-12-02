@@ -53,7 +53,7 @@ public class UserController {
 
 		UserProvisioningResponse userProvisioningResponse = userService.create(organisationId, provisionerId, user);
 
-		return ResponseEntity.ok(userProvisioningResponse);
+		return ResponseEntity.status(HttpStatus.CREATED).body(userProvisioningResponse);
 	}
 
 }
