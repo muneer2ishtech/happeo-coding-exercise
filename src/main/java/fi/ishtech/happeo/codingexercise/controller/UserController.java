@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fi.ishtech.happeo.codingexercise.payload.request.UserProvisioningRequest;
 import fi.ishtech.happeo.codingexercise.payload.response.UserProvisioningResponse;
+import fi.ishtech.happeo.codingexercise.payload.response.UserResponse;
 import fi.ishtech.happeo.codingexercise.service.UserService;
 import fi.ishtech.happeo.codingexercise.spec.UserSpec;
 import jakarta.validation.Valid;
@@ -35,10 +36,17 @@ public class UserController {
 	private UserService userService;
 
 	/**
-	 * @return
+	 * Finds User(s) matching the params and default sorted by User.id.<br>
+	 * You can sort
+	 * 
+	 * @param organisationId
+	 * @param isActive
+	 * @param unpaged
+	 * @param pageable
+	 * @return {@link ResponseEntity}&lt;{@link Page}&lt;{@link UserResponse}&gt;&gt;
 	 */
 	@GetMapping("/api/organisations/{organisationId}/users")
-	public ResponseEntity<Page<UserProvisioningResponse>> findUsers(@PathVariable Long organisationId,
+	public ResponseEntity<Page<UserResponse>> findUsers(@PathVariable Long organisationId,
 			@RequestParam(required = false) Boolean isActive,
 			@RequestParam(name = "unpaged", required = false, defaultValue = "false") Boolean unpaged,
 			@SortDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {

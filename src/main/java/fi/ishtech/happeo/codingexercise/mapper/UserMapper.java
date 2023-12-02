@@ -1,12 +1,14 @@
 package fi.ishtech.happeo.codingexercise.mapper;
 
 import org.mapstruct.BeanMapping;
+import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import fi.ishtech.happeo.codingexercise.entity.User;
 import fi.ishtech.happeo.codingexercise.payload.request.UserProvisioningRequest;
 import fi.ishtech.happeo.codingexercise.payload.response.UserProvisioningResponse;
+import fi.ishtech.happeo.codingexercise.payload.response.UserResponse;
 
 /**
  * Mapper to convert Provisioner entity to request/response payload
@@ -31,5 +33,10 @@ public interface UserMapper {
 	@Mapping(source = "externalId", target = "id")
 	@Mapping(source = "id", target = "applicationId")
 	UserProvisioningResponse toUserProvisioningResponse(User user);
+
+	@BeanMapping(ignoreByDefault = true)
+	@InheritConfiguration(name = "toUserProvisioningResponse")
+	@Mapping(source = "active", target = "active")
+	UserResponse toUserResponse(User user);
 
 }
