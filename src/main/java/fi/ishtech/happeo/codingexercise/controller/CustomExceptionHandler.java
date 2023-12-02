@@ -61,12 +61,9 @@ public class CustomExceptionHandler {
 				}
 			}
 		} else if (StringUtils.containsIgnoreCase(ex.getMessage(), FK_CONSTRAINT_VIOLATION)) {
-			if (StringUtils.containsIgnoreCase(ex.getMessage(), "fk_user_org_id")) {
+			if (StringUtils.containsIgnoreCase(ex.getMessage(), "Key (organisation_id)")) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 						.body(CustomErrorResponse.of(HttpStatus.BAD_REQUEST.value(), "Invalid organisationId"));
-			} else {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-						.body(ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, ex.getMessage()));
 			}
 		}
 
