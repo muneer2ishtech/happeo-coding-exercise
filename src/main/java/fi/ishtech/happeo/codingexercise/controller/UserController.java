@@ -38,10 +38,7 @@ public class UserController {
 	@GetMapping("/api/organisations/{organisationId}/users")
 	public ResponseEntity<Page<UserProvisioningResponse>> findUsers(@PathVariable Long organisationId,
 			@RequestParam(required = false) Boolean isActive,
-			@RequestParam(name = "unpaged", required = false, defaultValue = "false") Boolean unpaged,
 			Pageable pageable) {
-
-		pageable = unpaged ? pageable == null ? Pageable.unpaged() : Pageable.unpaged(pageable.getSort()) : pageable;
 
 		return ResponseEntity.ok(userService.findAllAndMapToResponse(UserSpec.of(organisationId, isActive), pageable));
 	}
