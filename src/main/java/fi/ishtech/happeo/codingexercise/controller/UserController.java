@@ -3,6 +3,8 @@ package fi.ishtech.happeo.codingexercise.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,11 @@ public class UserController {
 	 */
 	@GetMapping("/api/organisations/{organisationId}/users")
 	public ResponseEntity<Page<UserProvisioningResponse>> findUsers(@PathVariable Long organisationId,
-			@RequestParam(required = false) Boolean isActive, Pageable pageable) {
+			@RequestParam(required = false) Boolean isActive,
+			@RequestParam(name = "unpaged", required = false, defaultValue = "false") Boolean unpaged,
+			@SortDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+
+		pageable = unpaged ? pageable == null ? Pageable.unpaged() : Pageable.unpaged(pageable.getSort()) : pageable;
 
 		return ResponseEntity.ok(userService.findAllAndMapToResponse(UserSpec.of(organisationId, isActive), pageable));
 	}
