@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import fi.ishtech.happeo.codingexercise.MissingOrganisationProvisionerException;
 import fi.ishtech.happeo.codingexercise.payload.response.CustomErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 
@@ -71,6 +72,14 @@ public class CustomExceptionHandler {
 
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 				.body(ErrorResponse.create(ex, HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage()));
+	}
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(MissingOrganisationProvisionerException.class)
+	public ResponseEntity<CustomErrorResponse> handleMissingOrganisationProvisionerException(
+			IllegalArgumentException ex) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body(CustomErrorResponse.of(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
 	}
 
 }

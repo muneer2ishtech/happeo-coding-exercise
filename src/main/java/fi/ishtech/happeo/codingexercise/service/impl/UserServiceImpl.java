@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fi.ishtech.happeo.codingexercise.MissingOrganisationProvisionerException;
 import fi.ishtech.happeo.codingexercise.entity.User;
 import fi.ishtech.happeo.codingexercise.mapper.UserMapper;
 import fi.ishtech.happeo.codingexercise.payload.request.UserProvisioningRequest;
 import fi.ishtech.happeo.codingexercise.payload.response.UserProvisioningResponse;
+import fi.ishtech.happeo.codingexercise.repo.OrgProvisionerRepo;
 import fi.ishtech.happeo.codingexercise.repo.UserRepo;
 import fi.ishtech.happeo.codingexercise.service.UserService;
 import jakarta.transaction.Transactional;
@@ -27,11 +29,19 @@ public class UserServiceImpl implements UserService {
 	private UserRepo userRepo;
 
 	@Autowired
+	private OrgProvisionerRepo orgProvisionerRepo;
+
+	@Autowired
 	private UserMapper userMapper;
 
 	@Override
 	public UserProvisioningResponse create(Long organisationId, Long provisionerId,
 			UserProvisioningRequest userProvisioningRequest) {
+		if (!orgProvisionerRepo.existsByOrganisationIdAndProvisionerId(organisationId, provisionerId)) {
+			throw new MissingOrganisationProvisionerException(
+					"Organisation and Provisioner combination is not present");
+		}
+
 		User user = userMapper.toEntity(userProvisioningRequest);
 		user.setOrganisationId(organisationId);
 
