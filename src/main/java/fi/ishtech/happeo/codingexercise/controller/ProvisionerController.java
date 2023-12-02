@@ -42,7 +42,8 @@ public class ProvisionerController {
 	}
 
 	/**
-	 * Creates Orginsation and Provisioner map and a secret for it
+	 * Creates Organisation and Provisioner map and a secret for it.<br>
+	 * Creates Provisioner if not present.
 	 *
 	 * @param provisioner    - {@link ProvisionerRequest}
 	 * @param organisationId
