@@ -37,7 +37,7 @@ public class UserController {
 	}
 
 	/**
-	 * For provisioning new user 
+	 * For provisioning new user
 	 *
 	 * @param user           - {@link UserProvisioningRequest}
 	 * @param organisationId
@@ -53,7 +53,7 @@ public class UserController {
 
 		UserProvisioningResponse userProvisioningResponse = userService.create(organisationId, provisionerId, user);
 
-		return ResponseEntity.ok(userProvisioningResponse);
+		return ResponseEntity.status(HttpStatus.CREATED).body(userProvisioningResponse);
 	}
 
 }

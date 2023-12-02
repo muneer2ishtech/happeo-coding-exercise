@@ -10,15 +10,21 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import fi.ishtech.happeo.codingexercise.payload.response.CustomErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * Handler class for Exceptions and return appropriate HttpStatus and error
+ * message.
  *
  * @author Muneer Ahmed Syed
  */
 @ControllerAdvice
 @Slf4j
 public class CustomExceptionHandler {
+
+	private static final String UNIQUE_CONSTRAINT_VIOLATION = "violates unique constraint";
+	private static final String FK_CONSTRAINT_VIOLATION = "violates foreign key constraint";
 
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ExceptionHandler(BadCredentialsException.class)
@@ -37,12 +43,13 @@ public class CustomExceptionHandler {
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ResponseEntity<?> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
 		log.error("DB Constraint failed: {}", ex.getMessage());
-		if (StringUtils.containsIgnoreCase(ex.getMessage(), "unique")) {
+		if (StringUtils.containsIgnoreCase(ex.getMessage(), UNIQUE_CONSTRAINT_VIOLATION)) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, ex.getMessage()));
-		} else if (StringUtils.containsIgnoreCase(ex.getMessage(), "violates foreign key constraint")) {
+		} else if (StringUtils.containsIgnoreCase(ex.getMessage(), FK_CONSTRAINT_VIOLATION)) {
 			if (StringUtils.containsIgnoreCase(ex.getMessage(), "fk_user_org_id")) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid organisationId");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body(CustomErrorResponse.of(HttpStatus.BAD_REQUEST.value(), "Invalid organisationId"));
 			} else {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 						.body(ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, ex.getMessage()));
