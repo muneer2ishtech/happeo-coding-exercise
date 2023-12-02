@@ -54,10 +54,10 @@ public class CustomExceptionHandler {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 						.body(ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, ex.getMessage()));
 			}
-		} else {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(ErrorResponse.create(ex, HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage()));
 		}
+
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+				.body(ErrorResponse.create(ex, HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage()));
 	}
 
 }
