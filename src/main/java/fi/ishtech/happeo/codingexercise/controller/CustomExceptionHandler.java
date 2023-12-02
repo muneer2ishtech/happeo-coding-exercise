@@ -45,7 +45,11 @@ public class CustomExceptionHandler {
 		log.error("DB Constraint failed: {}", ex.getMessage());
 		if (StringUtils.containsIgnoreCase(ex.getMessage(), UNIQUE_CONSTRAINT_VIOLATION)) {
 			if (StringUtils.containsIgnoreCase(ex.getMessage(), "t_user")) {
-				if (StringUtils.containsIgnoreCase(ex.getMessage(), "Key (organisation_id, external_id)")) {
+				if (StringUtils.containsIgnoreCase(ex.getMessage(), "Key (email)")) {
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+							.body(CustomErrorResponse.of(HttpStatus.BAD_REQUEST.value(),
+									"User with input email already exists"));
+				} else if (StringUtils.containsIgnoreCase(ex.getMessage(), "Key (organisation_id, external_id)")) {
 					return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 							.body(CustomErrorResponse.of(HttpStatus.BAD_REQUEST.value(),
 									"User with input external Id already exists for organisationId"));
