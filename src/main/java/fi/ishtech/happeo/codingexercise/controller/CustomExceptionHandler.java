@@ -55,8 +55,6 @@ public class CustomExceptionHandler {
 									"User with input external Id already exists for organisationId"));
 				}
 			}
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, ex.getMessage()));
 		} else if (StringUtils.containsIgnoreCase(ex.getMessage(), FK_CONSTRAINT_VIOLATION)) {
 			if (StringUtils.containsIgnoreCase(ex.getMessage(), "fk_user_org_id")) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
