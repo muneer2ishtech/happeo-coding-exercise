@@ -11,7 +11,7 @@ import fi.ishtech.happeo.codingexercise.payload.response.UserProvisioningRespons
  */
 public interface UserService {
 
-	UserProvisioningResponse create(Long orgnisationId, Long provisionerId,
+	UserProvisioningResponse create(Long organisationId, Long provisionerId,
 			UserProvisioningRequest userProvisioningRequest);
 
 	void updateAsActive(Long organisationId, List<Long> userIds);

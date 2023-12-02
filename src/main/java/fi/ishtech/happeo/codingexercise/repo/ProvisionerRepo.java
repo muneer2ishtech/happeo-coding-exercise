@@ -10,4 +10,6 @@ import fi.ishtech.happeo.codingexercise.entity.Provisioner;
  */
 public interface ProvisionerRepo extends JpaRepository<Provisioner, Long> {
 
+	Provisioner findOneByNameIgnoreCase(String name);
+
 }
