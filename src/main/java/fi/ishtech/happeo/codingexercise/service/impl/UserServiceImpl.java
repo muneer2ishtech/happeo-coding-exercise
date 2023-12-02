@@ -3,6 +3,9 @@ package fi.ishtech.happeo.codingexercise.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import fi.ishtech.happeo.codingexercise.MissingOrganisationProvisionerException;
@@ -57,4 +60,13 @@ public class UserServiceImpl implements UserService {
 		log.debug("Acivated {} users of Organisation {}", result, organisationId);
 	}
 
+	private Page<User> findAll(Specification<User> spec, Pageable pageable) {
+		return userRepo.findAll(spec, pageable);
+	}
+
+	@Override
+	public Page<UserProvisioningResponse> findAllAndMapToResponse(Specification<User> spec, Pageable pageable) {
+		return this.findAll(spec, pageable).map(userMapper::toUserProvisioningResponse);
+	}
+	
 }
