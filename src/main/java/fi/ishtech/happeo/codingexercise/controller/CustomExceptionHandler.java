@@ -53,6 +53,11 @@ public class CustomExceptionHandler {
 							.body(CustomErrorResponse.of(HttpStatus.BAD_REQUEST.value(),
 									"User with input external Id already exists for organisationId"));
 				}
+			} else if (StringUtils.containsIgnoreCase(ex.getMessage(), "t_org_provisioner")) {
+				if (StringUtils.containsIgnoreCase(ex.getMessage(), "Key (organisation_id, provisioner_id)")) {
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(CustomErrorResponse
+							.of(HttpStatus.BAD_REQUEST.value(), "Provisioner already exists for Organisation"));
+				}
 			}
 		} else if (StringUtils.containsIgnoreCase(ex.getMessage(), FK_CONSTRAINT_VIOLATION)) {
 			if (StringUtils.containsIgnoreCase(ex.getMessage(), "fk_user_org_id")) {
