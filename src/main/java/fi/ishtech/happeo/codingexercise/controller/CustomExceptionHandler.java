@@ -20,6 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomExceptionHandler {
 
+	private static final String UNIQUE_CONSTRAINT_VIOLATION = "violates unique constraint";
+	private static final String FK_CONSTRAINT_VIOLATION = "violates foreign key constraint";
+
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ExceptionHandler(BadCredentialsException.class)
 	public ResponseEntity<ErrorResponse> handleBadCredentialsException(BadCredentialsException ex) {
@@ -37,10 +40,10 @@ public class CustomExceptionHandler {
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ResponseEntity<?> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
 		log.error("DB Constraint failed: {}", ex.getMessage());
-		if (StringUtils.containsIgnoreCase(ex.getMessage(), "unique")) {
+		if (StringUtils.containsIgnoreCase(ex.getMessage(), UNIQUE_CONSTRAINT_VIOLATION)) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, ex.getMessage()));
-		} else if (StringUtils.containsIgnoreCase(ex.getMessage(), "violates foreign key constraint")) {
+		} else if (StringUtils.containsIgnoreCase(ex.getMessage(), FK_CONSTRAINT_VIOLATION)) {
 			if (StringUtils.containsIgnoreCase(ex.getMessage(), "fk_user_org_id")) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid organisationId");
 			} else {
