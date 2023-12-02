@@ -18,3 +18,14 @@
 | OpenAPI            | GET   | localhost:8080/api-docs                 |
 | Swagger            | GET   | localhost:8080/swagger-ui.html          |
 
+
+## Pagination & Sorting
+- Add param `&size=n` for page size
+- Page size param works only for 1 to Integer.MAX_VALUE
+- If you want all results then setting size to zero does not work
+- You need send custom param `unpaged=true`
+- e.g. `http://localhost:8080/api/organisations/{{organisationId}}/users?isActive=true&page=3&size=5`
+- Param for sorting `&sort=email,DESC`
+
+## To find users to activate
+- `http://localhost:8080/api/organisations/{{organisationId}}/users?isActive=false&unpaged=true`
