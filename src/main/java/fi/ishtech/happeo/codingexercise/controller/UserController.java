@@ -37,7 +37,7 @@ public class UserController {
 	}
 
 	/**
-	 * For provisioning new user 
+	 * For provisioning new user
 	 *
 	 * @param user           - {@link UserProvisioningRequest}
 	 * @param organisationId
