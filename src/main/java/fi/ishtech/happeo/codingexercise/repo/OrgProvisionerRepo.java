@@ -10,4 +10,6 @@ import fi.ishtech.happeo.codingexercise.entity.OrgProvisioner;
  */
 public interface OrgProvisionerRepo extends JpaRepository<OrgProvisioner, Long> {
 
+	boolean existsByOrganisationIdAndProvisionerId(Long organisationId, Long provisionerId);
+
 }
