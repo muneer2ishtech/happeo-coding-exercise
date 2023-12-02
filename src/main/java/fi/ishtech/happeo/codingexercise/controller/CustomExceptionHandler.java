@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import fi.ishtech.happeo.codingexercise.payload.response.CustomErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -47,7 +48,8 @@ public class CustomExceptionHandler {
 					.body(ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, ex.getMessage()));
 		} else if (StringUtils.containsIgnoreCase(ex.getMessage(), FK_CONSTRAINT_VIOLATION)) {
 			if (StringUtils.containsIgnoreCase(ex.getMessage(), "fk_user_org_id")) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid organisationId");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body(CustomErrorResponse.of(HttpStatus.BAD_REQUEST.value(), "Invalid organisationId"));
 			} else {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 						.body(ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, ex.getMessage()));
