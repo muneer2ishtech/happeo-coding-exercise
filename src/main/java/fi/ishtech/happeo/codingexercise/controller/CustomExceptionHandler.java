@@ -74,7 +74,7 @@ public class CustomExceptionHandler {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MissingOrganisationProvisionerException.class)
 	public ResponseEntity<CustomErrorResponse> handleMissingOrganisationProvisionerException(
-			IllegalArgumentException ex) {
+			MissingOrganisationProvisionerException ex) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.body(CustomErrorResponse.of(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
 	}
