@@ -18,7 +18,7 @@ import fi.ishtech.happeo.codingexercise.entity.User;
 public interface UserRepo extends JpaRepository<User, Long> {
 
 	@Modifying
-	@Query("UPDATE User u SET u.isActive = true WHERE organisationId = :organisationId AND u.id IN :userIds")
+	@Query("UPDATE User u SET u.isActive = true WHERE organisationId = :organisationId AND u.isActive = false AND u.id IN :userIds")
 	int updateAsActive(Long organisationId, List<Long> userIds);
 
 	Page<User> findAll(Specification<User> specification, Pageable pageable);
