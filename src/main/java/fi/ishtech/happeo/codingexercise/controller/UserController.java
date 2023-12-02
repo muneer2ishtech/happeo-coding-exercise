@@ -65,7 +65,7 @@ public class UserController {
 
 		userService.updateAsActive(organisationId, userIds);
 
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.ok().build();
 	}
 
 	/**
