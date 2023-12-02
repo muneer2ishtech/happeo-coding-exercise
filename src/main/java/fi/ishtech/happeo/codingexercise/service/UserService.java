@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import fi.ishtech.happeo.codingexercise.entity.User;
 import fi.ishtech.happeo.codingexercise.payload.request.UserProvisioningRequest;
 import fi.ishtech.happeo.codingexercise.payload.response.UserProvisioningResponse;
+import fi.ishtech.happeo.codingexercise.payload.response.UserResponse;
 
 /**
  *
@@ -21,6 +22,6 @@ public interface UserService {
 
 	void updateAsActive(Long organisationId, List<Long> userIds);
 
-	Page<UserProvisioningResponse> findAllAndMapToResponse(Specification<User> spec, Pageable pageable);
+	Page<UserResponse> findAllAndMapToResponse(Specification<User> spec, Pageable pageable);
 
 }
