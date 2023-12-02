@@ -13,6 +13,7 @@ import fi.ishtech.happeo.codingexercise.entity.User;
 import fi.ishtech.happeo.codingexercise.mapper.UserMapper;
 import fi.ishtech.happeo.codingexercise.payload.request.UserProvisioningRequest;
 import fi.ishtech.happeo.codingexercise.payload.response.UserProvisioningResponse;
+import fi.ishtech.happeo.codingexercise.payload.response.UserResponse;
 import fi.ishtech.happeo.codingexercise.repo.OrgProvisionerRepo;
 import fi.ishtech.happeo.codingexercise.repo.UserRepo;
 import fi.ishtech.happeo.codingexercise.service.UserService;
@@ -65,8 +66,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Page<UserProvisioningResponse> findAllAndMapToResponse(Specification<User> spec, Pageable pageable) {
-		return this.findAll(spec, pageable).map(userMapper::toUserProvisioningResponse);
+	public Page<UserResponse> findAllAndMapToResponse(Specification<User> spec, Pageable pageable) {
+		return this.findAll(spec, pageable).map(userMapper::toUserResponse);
 	}
-	
+
 }
