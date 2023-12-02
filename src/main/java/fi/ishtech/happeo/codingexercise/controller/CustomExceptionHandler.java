@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * Handler class for Exceptions and return appropriate HttpStatus and error
+ * message.
  *
  * @author Muneer Ahmed Syed
  */
