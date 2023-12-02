@@ -1,5 +1,7 @@
 package fi.ishtech.happeo.codingexercise.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,6 +57,15 @@ public class UserController {
 		pageable = unpaged ? pageable == null ? Pageable.unpaged() : Pageable.unpaged(pageable.getSort()) : pageable;
 
 		return ResponseEntity.ok(userService.findAllAndMapToResponse(UserSpec.of(organisationId, isActive), pageable));
+	}
+
+	@PatchMapping("/api/organisations/{organisationId}/activate-users")
+	public ResponseEntity<Void> updateUsersAsActive(@PathVariable Long organisationId,
+			@RequestBody List<Long> userIds) {
+
+		userService.updateAsActive(organisationId, userIds);
+
+		return ResponseEntity.noContent().build();
 	}
 
 	/**
