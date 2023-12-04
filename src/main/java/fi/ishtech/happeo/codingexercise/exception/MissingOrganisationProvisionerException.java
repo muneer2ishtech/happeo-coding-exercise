@@ -1,4 +1,4 @@
-package fi.ishtech.happeo.codingexercise;
+package fi.ishtech.happeo.codingexercise.exception;
 
 /**
  * Exception if Organisation or Provisioner are not present
