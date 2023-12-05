@@ -63,7 +63,13 @@ public class ProvisionerServiceImpl implements ProvisionerService {
 		orgProvisioner.setOrganisationId(organisationId);
 		orgProvisioner.setProvisionerId(provisionerId);
 		orgProvisioner.setSecret("TODO");
-
+		// String secretString = Encoders.BASE64.encode(key.getEncoded());
+		// Jwts.SIG.HS256.key().build().getEncoded();
+		// var secureRandom = new SecureRandom();
+		/*
+		 * var crc32 = new CRC32() .update(crc32SecretKey.toByteArray())
+		 * .update(randomString.toByteArray())
+		 */
 		orgProvisioner = orgProvisionerRepo.save(orgProvisioner);
 		log.debug("Created new OrgProvisioner({})", orgProvisioner.getId());
 	}
