@@ -15,6 +15,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import fi.ishtech.happeo.codingexercise.security.jwt.JwtFilter;
+
 /**
  *
  * @author Muneer Ahmed Syed
@@ -22,6 +24,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableMethodSecurity
 public class WebSecurityConfig {
+
+	@Bean
+	JwtFilter jwtFilter() {
+		return new JwtFilter();
+	}
 
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -44,9 +51,10 @@ public class WebSecurityConfig {
 							.permitAll()
 						.anyRequest()
 							.authenticated())
-			.addFilterBefore(new AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 			;
 		// @formatter:on
+
+		http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}
