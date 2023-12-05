@@ -35,24 +35,26 @@ public class JwtFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		try {
 			String jwt = jwtUtil.parseJwt(request);
-			Long organisationId = 2L; //fetchFromPathVariable(request, "organisationId");
-			Long provisionerId = 1L; //fetchFromPathVariable(request, "provisionerId");
 
-			OrgProvisioner orgProvisioner = orgProvisionerRepo
-					.findByOrganisationIdAndProvisionerId(organisationId, provisionerId)
-					.orElseThrow(() -> new BadCredentialsException(
-							"Secret not present for organisationId and provisionerId"));
+			if (jwt != null) {
+				Long organisationId = 2L; // fetchFromPathVariable(request, "organisationId");
+				Long provisionerId = 1L; // fetchFromPathVariable(request, "provisionerId");
 
-			String secret = orgProvisioner.getSecret();
+				OrgProvisioner orgProvisioner = orgProvisionerRepo
+						.findByOrganisationIdAndProvisionerId(organisationId, provisionerId)
+						.orElseThrow(() -> new BadCredentialsException(
+								"Secret not present for organisationId and provisionerId"));
 
-			if (jwt != null && jwtUtil.validateJwtToken(secret, organisationId.toString(), jwt)) {
+				String secret = orgProvisioner.getSecret();
 
-				OrganisationProvisionerAuthentication authentication = new OrganisationProvisionerAuthentication(
-						organisationId);
+				if (jwtUtil.validateJwtToken(secret, organisationId.toString(), jwt)) {
+					OrganisationProvisionerAuthentication authentication = new OrganisationProvisionerAuthentication(
+							organisationId);
 
-				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+					authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-				SecurityContextHolder.getContext().setAuthentication(authentication);
+					SecurityContextHolder.getContext().setAuthentication(authentication);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Cannot set authentication: {}", e);
