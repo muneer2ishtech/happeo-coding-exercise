@@ -54,8 +54,6 @@
 ### Docker Image pulled from Docker Hub
 - [How to run Docker Image pulled from Docker Hub](./HOW-TO-TECHNICAL.md#run-docker-image-pulled-from-docker-hub) without making any builds locally
 
-#### For builds / local run etc
-See [How-to-technical](./HOW-TO-TECHNICAL.md) on how to make maven, docker builds and push & pull images to Docker Hub
 
 ### How to use system functionally (Business Operations)
   - See [How-to-functional](./HOW-TO-FUNCTIONAL.md)
