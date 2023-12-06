@@ -12,7 +12,7 @@
 
 	<groupId>fi.ishtech.happeo</groupId>
 	<artifactId>happeo-coding-exercise</artifactId>
-	<version>0.4.0</version>
+	<version>0.5.0</version>
 
 	<name>happeo-coding-exercise</name>
 	<description>Spring Boot for multiple auth providers</description>
