@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import fi.ishtech.happeo.codingexercise.MissingOrganisationProvisionerException;
 import fi.ishtech.happeo.codingexercise.entity.User;
+import fi.ishtech.happeo.codingexercise.exception.MissingOrganisationProvisionerException;
 import fi.ishtech.happeo.codingexercise.mapper.UserMapper;
 import fi.ishtech.happeo.codingexercise.payload.request.UserProvisioningRequest;
 import fi.ishtech.happeo.codingexercise.payload.response.UserProvisioningResponse;
