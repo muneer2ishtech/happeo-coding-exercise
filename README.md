@@ -26,7 +26,7 @@
 | Swagger                  | GET   | /swagger-ui.html                                                          | Swagger generated API Documentation |
 | Organisation Admin       | GET   | /api/provisioners                                                         | Get all existing Provisioners |
 | Organisation Admin       | GET   | /api/organisations/{{organisationId}}/provisioners                        | Creates Organisation and Provisioner map and a secret for it. Creates Provisioner if not present. |
-| Organisation Admin       | POST  | /api/organisations/{{organisationId}}/users                               | Finds Users matching the params, see [Pagination & Sorting](#Pagination & Sorting) |
+| Organisation Admin       | POST  | /api/organisations/{{organisationId}}/users                               | Finds Users matching the params, see [Pagination &amp; Sorting](#pagination--sorting) |
 | Organisation Admin       | PATCH | /api/organisations/{{organisationId}}/activate-users                      | Activates inactive users belonging to organisation. If the user is already active, it does nothing, simply ignores those user IDs. If the user does not belong to organisation, it will not be activated, simply ignores those user IDs (No error thrown) |
 | External Identity System | POST  | /api/organisations/{{organisationId}}/provisioner/{{provisionerId}}/users | For provisioning new user by External identity system (Provisioner) |
 
