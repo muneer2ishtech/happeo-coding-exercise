@@ -11,13 +11,18 @@
 ## Improvements
 - We can create is_org_admin in user table, as all users in an organisation can be admin, and whoever is admin will have this flag as true so they can only create secrets or activate / deactivate users in their organisation.
 
-## API Docs
 
-| Type               | HTTP  | URL                                     |
-|--------------------|-------|-----------------------------------------|
-| OpenAPI            | GET   | localhost:8080/api-docs                 |
-| Swagger            | GET   | localhost:8080/swagger-ui.html          |
+## APIs
 
+| Type                     | HTTP  | URL                                                                       | Description |
+|--------------------------|-------|---------------------------------------------------------------------------|-------------|
+| OpenAPI                  | GET   | /api-docs                                                                 | Spring generated API Documentation  |
+| Swagger                  | GET   | /swagger-ui.html                                                          | Swagger generated API Documentation |
+| Orgnisation Admin        | GET   | /api/provisioners                                                         | Get all existing Provisioners |
+| Orgnisation Admin        | GET   | /api/organisations/{orgnisationId}/provisioners                           | Creates Organisation and Provisioner map and a secret for it. Creates Provisioner if not present. |
+| Orgnisation Admin        | POST  | /api/organisations/{orgnisationId}/users                                  | Finds Users matching the params, see [Pagination & Sorting](#Pagination & Sorting) |
+| Orgnisation Admin        | PATCH | /api/organisations/{orgnisationId}/activate-users                         | Activates inactive users belonging to organisation. If the user is already active, it does nothing, simply ignores those user IDs. If the user does not belong to organisation, it will not be activated, simply ignores those user IDs (No error thrown) |
+| External Identity System | POST  | /api/organisations/{{organisationId}}/provisioner/{{provisionerId}}/users | For provisioning new user by External identity system (Provisioner) |
 
 ## Pagination & Sorting
 - Add param `&size=n` for page size
