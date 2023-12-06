@@ -40,7 +40,7 @@ public class UserController {
 
 	/**
 	 * Finds User(s) matching the params<br>
-	 * default sorted by User.id<br>
+	 * default sorted by User.id ascending<br>
 	 * You can sort with other fields by passing sort parameters<br>
 	 *
 	 * @param organisationId
