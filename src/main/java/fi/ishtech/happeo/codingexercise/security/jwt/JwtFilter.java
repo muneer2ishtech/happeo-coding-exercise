@@ -110,7 +110,7 @@ public class JwtFilter extends OncePerRequestFilter {
 		try {
 			return Long.valueOf(str);
 		} catch (NumberFormatException e) {
-			throw new IllegalArgumentException("Invalid orignsationId in URL, should be an integer");
+			throw new IllegalArgumentException("Invalid orgnisationId in URL, should be an integer");
 		}
 	}
 
