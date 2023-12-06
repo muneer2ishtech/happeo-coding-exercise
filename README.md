@@ -27,5 +27,16 @@
 - e.g. `http://localhost:8080/api/organisations/{{organisationId}}/users?isActive=true&page=3&size=5`
 - Param for sorting `&sort=email,DESC`
 
+## How to
+
+### Docker Image pulled from Docker Hub
+- [How to run Docker Image pulled from Docker Hub](./HOW-TO-TECHNICAL.md#run-docker-image-pulled-from-docker-hub) without making any builds locally
+
+#### For builds / local run etc
+See [How-to-technical](./HOW-TO-TECHNICAL.md) on how to make maven, docker builds and push & pull images to Docker Hub
+
+### How to use system functionally (Business Operations)
+  - See [How-to-functional](./HOW-TO-FUNCTIONAL.md)
+
 ## To find users to activate
 - `http://localhost:8080/api/organisations/{{organisationId}}/users?isActive=false&unpaged=true`
