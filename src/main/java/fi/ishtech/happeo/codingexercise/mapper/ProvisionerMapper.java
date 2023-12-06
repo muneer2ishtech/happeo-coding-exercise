@@ -17,6 +17,6 @@ public interface ProvisionerMapper {
 
 	ProvisionerResponse toResponse(Provisioner provisioner);
 
-	List<ProvisionerResponse> toResponse(List<Provisioner> provisioner);
+	List<ProvisionerResponse> toResponse(List<Provisioner> provisioners);
 
 }

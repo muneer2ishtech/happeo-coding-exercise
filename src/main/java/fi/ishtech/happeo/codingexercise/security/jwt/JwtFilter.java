@@ -105,12 +105,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
 		String str = StringUtils.substringBetween(uri, "/api/organisations/", "/provisioner/");
 		log.debug("orgnaisationId:{}", str);
-		Assert.isTrue(StringUtils.isNotBlank(str), "orgnisationId not in URL");
+		Assert.isTrue(StringUtils.isNotBlank(str), "organisationId not in URL");
 
 		try {
 			return Long.valueOf(str);
 		} catch (NumberFormatException e) {
-			throw new IllegalArgumentException("Invalid orignsationId in URL, should be an integer");
+			throw new IllegalArgumentException("Invalid organisationId in URL, should be an integer");
 		}
 	}
 
