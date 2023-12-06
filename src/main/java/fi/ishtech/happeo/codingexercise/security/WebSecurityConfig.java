@@ -40,7 +40,10 @@ public class WebSecurityConfig {
 			.authorizeHttpRequests(
 					auth -> auth
 						.requestMatchers(
+								"/api/provisioners",
 								"/api/organisations/*/provisioners",
+								"/api/organisations/*/users",
+								"/api/organisations/*/activate-users",
 								"/error",
 								"/",
 								"/api-docs",
