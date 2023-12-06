@@ -65,23 +65,32 @@ public class JwtFilter extends OncePerRequestFilter {
 
 	@SuppressWarnings("unchecked")
 	private Map<String, String> fetchPathVariables(HttpServletRequest request) {
+		// This is not getting PathVariable
 		return (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-
 	}
 
-	private Long fetchFromPathVariable(HttpServletRequest request, String key) {
+	/**
+	 * Fetches path variable from Rest URI.<br>
+	 * It is not working now
+	 * 
+	 * @param request
+	 * @param name
+	 * @return {@link PathVariable}
+	 */
+	@SuppressWarnings("unused")
+	private Long fetchFromPathVariable(HttpServletRequest request, String name) {
 		Map<String, String> pathVars = fetchPathVariables(request);
 
-		Assert.isTrue(pathVars.containsKey(key), key + " not in URL");
+		Assert.isTrue(pathVars.containsKey(name), name + " not in URL");
 
-		String str = pathVars.get(key);
-		Assert.isTrue(StringUtils.isNotBlank(str), key + " not in URL");
+		String str = pathVars.get(name);
+		Assert.isTrue(StringUtils.isNotBlank(str), name + " not in URL");
 
 		Long val;
 		try {
-			val = Long.valueOf(key);
+			val = Long.valueOf(name);
 		} catch (NumberFormatException e) {
-			throw new IllegalArgumentException("Invalid " + key + " in URL, should be an integer");
+			throw new IllegalArgumentException("Invalid " + name + " in URL, should be an integer");
 		}
 
 		return val;
