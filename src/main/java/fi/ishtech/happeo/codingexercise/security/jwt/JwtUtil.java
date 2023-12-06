@@ -11,6 +11,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +53,18 @@ public class JwtUtil {
 
 	private SecretKey jwtKey(String jwtSecret) {
 		return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+	}
+
+	private SecretKey generateSecretKey() {
+		return Jwts.SIG.HS256.key().build();
+	}
+
+	public String generateEncodedSecretString() {
+		return Encoders.BASE64.encode(generateSecretKey().getEncoded());
+	}
+
+	public String decodeBase64(String encoded) {
+		return new String(Decoders.BASE64.decode(encoded));
 	}
 
 }

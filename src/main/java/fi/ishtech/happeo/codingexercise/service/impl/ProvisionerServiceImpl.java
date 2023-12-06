@@ -12,6 +12,7 @@ import fi.ishtech.happeo.codingexercise.payload.request.ProvisionerRequest;
 import fi.ishtech.happeo.codingexercise.payload.response.ProvisionerResponse;
 import fi.ishtech.happeo.codingexercise.repo.OrgProvisionerRepo;
 import fi.ishtech.happeo.codingexercise.repo.ProvisionerRepo;
+import fi.ishtech.happeo.codingexercise.security.jwt.JwtUtil;
 import fi.ishtech.happeo.codingexercise.service.ProvisionerService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -36,6 +37,9 @@ public class ProvisionerServiceImpl implements ProvisionerService {
 	@Autowired
 	private ProvisionerMapper provisionerMapper;
 
+	@Autowired
+	private JwtUtil jwtUtil;
+
 	@Override
 	public List<ProvisionerResponse> findAll() {
 		return provisionerMapper.toResponse(provisionerRepo.findAll());
@@ -53,25 +57,27 @@ public class ProvisionerServiceImpl implements ProvisionerService {
 			log.info("Created new Provisioner({}) as missing for {}", provisioner.getId(), provisioner.getName());
 		}
 
-		createOrgProvisioner(organisationId, provisioner.getId());
+		String encodedSecret = createOrgProvisioner(organisationId, provisioner.getId());
 
-		return provisionerMapper.toResponse(provisioner);
+		ProvisionerResponse provisionerResponse = provisionerMapper.toResponse(provisioner);
+		provisionerResponse.setSecret(jwtUtil.decodeBase64(encodedSecret));
+
+		return provisionerResponse;
 	}
 
-	private void createOrgProvisioner(Long organisationId, Long provisionerId) {
+	private String createOrgProvisioner(Long organisationId, Long provisionerId) {
 		OrgProvisioner orgProvisioner = new OrgProvisioner();
 		orgProvisioner.setOrganisationId(organisationId);
 		orgProvisioner.setProvisionerId(provisionerId);
-		orgProvisioner.setSecret("TODO");
-		// String secretString = Encoders.BASE64.encode(key.getEncoded());
-		// Jwts.SIG.HS256.key().build().getEncoded();
-		// var secureRandom = new SecureRandom();
-		/*
-		 * var crc32 = new CRC32() .update(crc32SecretKey.toByteArray())
-		 * .update(randomString.toByteArray())
-		 */
+
+		String encodedSecret = jwtUtil.generateEncodedSecretString();
+
+		orgProvisioner.setSecret(encodedSecret);
+
 		orgProvisioner = orgProvisionerRepo.save(orgProvisioner);
 		log.debug("Created new OrgProvisioner({})", orgProvisioner.getId());
+
+		return encodedSecret;
 	}
 
 }
