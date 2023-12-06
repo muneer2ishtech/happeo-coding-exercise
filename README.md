@@ -54,6 +54,8 @@
 ### Docker Image pulled from Docker Hub
 - [How to run Docker Image pulled from Docker Hub](./HOW-TO-TECHNICAL.md#run-docker-image-pulled-from-docker-hub) without making any builds locally
 
+### Get Token (JWT) to use
+- [How to get JWT from jwt.io](./HOW-TO-JWT.md)
 
 ### How to use system functionally (Business Operations)
   - See [How-to-functional](./HOW-TO-FUNCTIONAL.md)
