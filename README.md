@@ -10,6 +10,7 @@
     - It is not safe to have secret in response body
 - Encryting Secret before storing in DB is out of scope
 - Sharing secrets in encrypted and secure way is out of scope
+- Authentication / Authorization not implmented for any APIs except one in challenge (i.e. provisioning of users by external identity system)
 
 ## Improvements
 - We can create is_org_admin in user table, as all users in an organisation can be admin, and whoever is admin will have this flag as true so they can only create secrets or activate / deactivate users in their organisation.
@@ -22,15 +23,15 @@
 
 ## APIs
 
-| Type                     | HTTP  | URL                                                                       | Description |
-|--------------------------|-------|---------------------------------------------------------------------------|-------------|
-| OpenAPI                  | GET   | /api-docs                                                                 | Spring generated API Documentation  |
-| Swagger                  | GET   | /swagger-ui.html                                                          | Swagger generated API Documentation |
-| Organisation Admin       | GET   | /api/provisioners                                                         | Get all existing Provisioners |
-| Organisation Admin       | GET   | /api/organisations/{{organisationId}}/provisioners                        | Creates Organisation and Provisioner map and a secret for it. Creates Provisioner if not present. |
-| Organisation Admin       | POST  | /api/organisations/{{organisationId}}/users                               | Finds Users matching the params, see [Pagination &amp; Sorting](./README.md#pagination--sorting) |
-| Organisation Admin       | PATCH | /api/organisations/{{organisationId}}/activate-users                      | Activates inactive users belonging to organisation. If the user is already active, it does nothing, simply ignores those user IDs. If the user does not belong to organisation, it will not be activated, simply ignores those user IDs (No error thrown) |
-| External Identity System | POST  | /api/organisations/{{organisationId}}/provisioner/{{provisionerId}}/users | For provisioning new user by External identity system (Provisioner) |
+| Type                     | Auth | HTTP  | URL                                                                       | Description |
+|--------------------------|------|-------|---------------------------------------------------------------------------|-------------|
+| OpenAPI                  | None | GET   | /api-docs                                                                 | Spring generated API Documentation  |
+| Swagger                  | None | GET   | /swagger-ui.html                                                          | Swagger generated API Documentation |
+| Organisation Admin       | None | GET   | /api/provisioners                                                         | Get all existing Provisioners |
+| Organisation Admin       | None | GET   | /api/organisations/{{organisationId}}/provisioners                        | Creates Organisation and Provisioner map and a secret for it. Creates Provisioner if not present. |
+| Organisation Admin       | None | POST  | /api/organisations/{{organisationId}}/users                               | Finds Users matching the params, see [Pagination &amp; Sorting](./README.md#pagination--sorting) |
+| Organisation Admin       | None | PATCH | /api/organisations/{{organisationId}}/activate-users                      | Activates inactive users belonging to organisation. If the user is already active, it does nothing, simply ignores those user IDs. If the user does not belong to organisation, it will not be activated, simply ignores those user IDs (No error thrown) |
+| External Identity System | JWT  | POST  | /api/organisations/{{organisationId}}/provisioner/{{provisionerId}}/users | For provisioning new user by External identity system (Provisioner) |
 
 ## Pagination & Sorting
 - Pagination
