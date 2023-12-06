@@ -17,10 +17,4 @@ public class ProvisionerResponse implements Serializable {
 
 	private String name;
 
-	/**
-	 * This is temporary solution to share the secret<br>
-	 * It is not safe to share secret in API response
-	 */
-	private String secret;
-
 }

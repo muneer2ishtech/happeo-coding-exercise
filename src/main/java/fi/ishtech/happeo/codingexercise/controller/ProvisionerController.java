@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fi.ishtech.happeo.codingexercise.payload.request.ProvisionerRequest;
+import fi.ishtech.happeo.codingexercise.payload.response.OrgProvisionerResponse;
 import fi.ishtech.happeo.codingexercise.payload.response.ProvisionerResponse;
 import fi.ishtech.happeo.codingexercise.payload.response.UserProvisioningResponse;
 import fi.ishtech.happeo.codingexercise.service.ProvisionerService;
@@ -50,13 +51,14 @@ public class ProvisionerController {
 	 * @return {@link ResponseEntity}&lt;{@link UserProvisioningResponse}&gt;
 	 */
 	@PostMapping(path = "/api/organisations/{organisationId}/provisioners", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ProvisionerResponse> createOrgProvisioner(@Valid @RequestBody ProvisionerRequest provisioner,
-			@PathVariable Long organisationId) {
+	public ResponseEntity<OrgProvisionerResponse> createOrgProvisioner(
+			@Valid @RequestBody ProvisionerRequest provisioner, @PathVariable Long organisationId) {
 		log.debug("Creating OrgProvisioner for Organisation:{}, Provisioner:{}", organisationId, provisioner.getName());
 
-		ProvisionerResponse provisionerResponse = provisionerService.createOrgProvisioner(organisationId, provisioner);
+		OrgProvisionerResponse orgProvisionerResponse = provisionerService.createOrgProvisioner(organisationId,
+				provisioner);
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(provisionerResponse);
+		return ResponseEntity.status(HttpStatus.CREATED).body(orgProvisionerResponse);
 	}
 
 }
