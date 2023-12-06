@@ -25,12 +25,20 @@
 | External Identity System | POST  | /api/organisations/{{organisationId}}/provisioner/{{provisionerId}}/users | For provisioning new user by External identity system (Provisioner) |
 
 ## Pagination & Sorting
-- Add param `&size=n` for page size
-- Page size param works only for 1 to Integer.MAX_VALUE
-- If you want all results then setting size to zero does not work
-- You need send custom param `unpaged=true`
-- e.g. `http://localhost:8080/api/organisations/{{organisationId}}/users?isActive=true&page=3&size=5`
-- Param for sorting `&sort=email,DESC`
+- Pagination
+  - Page size param works only for 1 to Integer.MAX_VALUE
+    - Add param `&size=n` for page size
+  - If you want all results then setting size to zero does not work
+  - Moving to different pages
+    - param `&page=2` (for third page)
+    - By default it fetches first page (i.e. `&page=0`)
+- Sorting
+  - Default sorting is by id in ascending order (in t_user)
+  - Sorting by one attribute
+    - `&sort=email,DESC`
+  - Sorting by multiple attributes
+    - `&sort=firstName,DESC&sort=lastName=ASC`
+  - `ASC` is optional and implied
 
 ## How to
 
