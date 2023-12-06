@@ -13,7 +13,7 @@ services:
        - 5432:5432
 
   spring-boot-app:
-    image: muneer2ishtech/happeo_coding_exercise_springboot:0.5.0
+    image: muneer2ishtech/happeo_coding_exercise_springboot:0.6.0-SNAPSHOT
     container_name: happeo_coding_exercise_springboot
     ports:
        - 8080:8080
