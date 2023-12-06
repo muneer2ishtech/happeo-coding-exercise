@@ -39,16 +39,17 @@ public class UserController {
 	private UserService userService;
 
 	/**
-	 * Finds User(s) matching the params and default sorted by User.id.<br>
-	 * You can sort
-	 * 
+	 * Finds User(s) matching the params<br>
+	 * default sorted by User.id ascending<br>
+	 * You can sort with other fields by passing sort parameters<br>
+	 *
 	 * @param organisationId
 	 * @param isActive
 	 * @param unpaged
 	 * @param pageable
 	 * @return {@link ResponseEntity}&lt;{@link Page}&lt;{@link UserResponse}&gt;&gt;
 	 */
-	@GetMapping("/api/organisations/{organisationId}/users")
+	@GetMapping(path = "/api/organisations/{organisationId}/users", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Page<UserResponse>> findUsers(@PathVariable Long organisationId,
 			@RequestParam(required = false) Boolean isActive,
 			@RequestParam(name = "unpaged", required = false, defaultValue = "false") Boolean unpaged,
@@ -59,6 +60,17 @@ public class UserController {
 		return ResponseEntity.ok(userService.findAllAndMapToResponse(UserSpec.of(organisationId, isActive), pageable));
 	}
 
+	/**
+	 * Activates inactive users belonging to organisation<br>
+	 * If the user is already active, it does nothing, simply ignores those user
+	 * IDs<br>
+	 * If the user does not belong to organisation, it will not be activated, simply
+	 * ignores those user IDs (No error thrown)<br>
+	 *
+	 * @param organisationId
+	 * @param userIds        - {@link List}&lt;{@link Long}&gt;
+	 * @return - no boby
+	 */
 	@PatchMapping("/api/organisations/{organisationId}/activate-users")
 	public ResponseEntity<Void> updateUsersAsActive(@PathVariable Long organisationId,
 			@RequestBody List<Long> userIds) {
@@ -69,14 +81,14 @@ public class UserController {
 	}
 
 	/**
-	 * For provisioning new user
+	 * For provisioning new user by External identity system (Provisioner)
 	 *
 	 * @param user           - {@link UserProvisioningRequest}
 	 * @param organisationId
 	 * @param provisionerId
 	 * @return {@link ResponseEntity}&lt;{@link UserProvisioningResponse}&gt;
 	 */
-	@PostMapping(path = "/api/organisations/{organisationId}/provisioner/{provisionerId}/users", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = "/api/organisations/{organisationId}/provisioner/{provisionerId}/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserProvisioningResponse> provisionNewUser(@Valid @RequestBody UserProvisioningRequest user,
 			@PathVariable Long organisationId, @PathVariable Long provisionerId) {
 		log.debug("Provisioning request for Organisation:{}, Provisioner:{}, externalId:{}", organisationId,
