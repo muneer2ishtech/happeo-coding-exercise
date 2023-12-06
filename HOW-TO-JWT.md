@@ -13,6 +13,6 @@
 [jwt.io screenshot for simple JWT](src/main/resources/static/images/jwt_encoded_instructions.png)
 1. Ensure HS256 is selected for Algorithm
 2. In PAYLOAD:DATA, put `organisationId` for `sub`
-3. In VERIFY SIGNATURE, Copy and paste `decodedSecret` from API response of `POST` - `/api/organisations/{{organisationId}}/users`
+3. In VERIFY SIGNATURE, Copy and paste `encodedSecret` from API response of `POST` - `/api/organisations/{{organisationId}}/users`
 4. Ensure "secret base64 encoded" as checked
 5. Copy Generated token and use
