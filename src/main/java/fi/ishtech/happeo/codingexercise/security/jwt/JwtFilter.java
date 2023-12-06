@@ -21,8 +21,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @NoArgsConstructor
+@Slf4j
 public class JwtFilter extends OncePerRequestFilter {
 
 	@Autowired
@@ -38,8 +40,8 @@ public class JwtFilter extends OncePerRequestFilter {
 			String jwt = jwtUtil.parseJwt(request);
 
 			if (jwt != null) {
-				Long organisationId = 2L; // fetchFromPathVariable(request, "organisationId");
-				Long provisionerId = 1L; // fetchFromPathVariable(request, "provisionerId");
+				Long organisationId = fetchOrganisationIdFromPathVariable(request);
+				Long provisionerId = fetchProvisionerIdFromPathVariable(request);
 
 				OrgProvisioner orgProvisioner = orgProvisionerRepo
 						.findByOrganisationIdAndProvisionerId(organisationId, provisionerId)
@@ -95,6 +97,36 @@ public class JwtFilter extends OncePerRequestFilter {
 		}
 
 		return val;
+	}
+
+	private Long fetchOrganisationIdFromPathVariable(HttpServletRequest request) {
+		String uri = request.getRequestURI();
+		log.trace("request uri:{}", request.getRequestURI());
+
+		String str = StringUtils.substringBetween(uri, "/api/organisations/", "/provisioner/");
+		log.debug("orgnaisationId:{}", str);
+		Assert.isTrue(StringUtils.isNotBlank(str), "orgnisationId not in URL");
+
+		try {
+			return Long.valueOf(str);
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException("Invalid orignsationId in URL, should be an integer");
+		}
+	}
+
+	private Long fetchProvisionerIdFromPathVariable(HttpServletRequest request) {
+		String uri = request.getRequestURI();
+		log.trace("request uri:{}", request.getRequestURI());
+
+		String str = StringUtils.substringBetween(uri, "/provisioner/", "/users");
+		log.debug("provisionerId:{}", str);
+		Assert.isTrue(StringUtils.isNotBlank(str), "provisionerId not in URL");
+
+		try {
+			return Long.valueOf(str);
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException("Invalid provisionerId in URL, should be an integer");
+		}
 	}
 
 }
