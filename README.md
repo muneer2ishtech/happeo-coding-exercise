@@ -6,12 +6,14 @@
     - If more than one is possible, then DB schema need to be updated by
        - Removing organisation_id, external_id from user table
        - And create mapping table with user_id, organisation_id, provisioner_id and external_id
-- Secret generated is shared manually with the organisation and not in current scope retreive it by API
+- API to create organisation and provisioner mapping return Secret in response body
+    - It is not safe to have secret in response body
 - Encryting Secret before storing in DB is out of scope
+- Sharing secrets in encrypted and secure way is out of scope
 
 ## Improvements
 - We can create is_org_admin in user table, as all users in an organisation can be admin, and whoever is admin will have this flag as true so they can only create secrets or activate / deactivate users in their organisation.
-- Secret stored in DB without encryption, it is not safe, whoever has access to DB can access it. It need to be encrypted before storing and decrypted before comparing.
+- Secret stored in DB without encryption, it is not safe (even though Base64 encoded), whoever has access to DB can access it. It need to be encrypted before storing and decrypted before comparing.
 - Infact it is better to use public and private key combination.
   - Share public key with external identity system (provisioner)
   - Store private key of the organisation and use it code.
@@ -24,10 +26,10 @@
 |--------------------------|-------|---------------------------------------------------------------------------|-------------|
 | OpenAPI                  | GET   | /api-docs                                                                 | Spring generated API Documentation  |
 | Swagger                  | GET   | /swagger-ui.html                                                          | Swagger generated API Documentation |
-| Orgnisation Admin        | GET   | /api/provisioners                                                         | Get all existing Provisioners |
-| Orgnisation Admin        | GET   | /api/organisations/{orgnisationId}/provisioners                           | Creates Organisation and Provisioner map and a secret for it. Creates Provisioner if not present. |
-| Orgnisation Admin        | POST  | /api/organisations/{orgnisationId}/users                                  | Finds Users matching the params, see [Pagination & Sorting](#Pagination & Sorting) |
-| Orgnisation Admin        | PATCH | /api/organisations/{orgnisationId}/activate-users                         | Activates inactive users belonging to organisation. If the user is already active, it does nothing, simply ignores those user IDs. If the user does not belong to organisation, it will not be activated, simply ignores those user IDs (No error thrown) |
+| Organisation Admin       | GET   | /api/provisioners                                                         | Get all existing Provisioners |
+| Organisation Admin       | GET   | /api/organisations/{{organisationId}}/provisioners                        | Creates Organisation and Provisioner map and a secret for it. Creates Provisioner if not present. |
+| Organisation Admin       | POST  | /api/organisations/{{organisationId}}/users                               | Finds Users matching the params, see [Pagination &amp; Sorting](#pagination--sorting) |
+| Organisation Admin       | PATCH | /api/organisations/{{organisationId}}/activate-users                      | Activates inactive users belonging to organisation. If the user is already active, it does nothing, simply ignores those user IDs. If the user does not belong to organisation, it will not be activated, simply ignores those user IDs (No error thrown) |
 | External Identity System | POST  | /api/organisations/{{organisationId}}/provisioner/{{provisionerId}}/users | For provisioning new user by External identity system (Provisioner) |
 
 ## Pagination & Sorting
