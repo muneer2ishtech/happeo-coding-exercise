@@ -17,6 +17,7 @@ import fi.ishtech.happeo.codingexercise.repo.OrgProvisionerRepo;
 import fi.ishtech.happeo.codingexercise.repo.ProvisionerRepo;
 import fi.ishtech.happeo.codingexercise.service.ProvisionerService;
 import io.jsonwebtoken.io.Encoders;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +44,9 @@ public class ProvisionerServiceImpl implements ProvisionerService {
 	@Autowired
 	private OrgProvisionerMapper orgProvisionerMapper;
 
+	@Autowired
+	private EntityManager entityManager;
+
 	@Override
 	public List<ProvisionerResponse> findAll() {
 		return provisionerMapper.toResponse(provisionerRepo.findAll());
@@ -65,6 +69,9 @@ public class ProvisionerServiceImpl implements ProvisionerService {
 		String secret = RandomStringUtils.randomAlphanumeric(64);
 
 		OrgProvisioner orgProvisioner = createOrgProvisioner(organisationId, provisioner.getId(), secret);
+
+		// this will refresh entity and fetches mapped entities
+		entityManager.refresh(orgProvisioner);
 
 		OrgProvisionerResponse orgProvisionerResponse = orgProvisionerMapper.toResponse(orgProvisioner);
 		orgProvisionerResponse.setDecodedSecret(secret);
