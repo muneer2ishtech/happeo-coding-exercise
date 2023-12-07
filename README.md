@@ -30,6 +30,8 @@
 - Did not code API to create Organisations, inserted data of some sample organisations
 - Authentication / Authorization not implemented for any APIs except one in challenge (i.e. provisioning of users by external identity system)
 - All JWT errors / Authentication errors are just returning 401 - Unathorized without any details of error 
+- No separate API to get id of inactive users to activate, Get Users API with filters combined with jq will suffice. (example given below)
+  - Generally in UI you see list of user details and you select (checkbox) and submit for activating, so UI code will pick those id
 
 
 ## Improvements
@@ -120,7 +122,7 @@ curl --request POST --location 'http://localhost:8080/api/organisations/1/provis
 
 ### Provision New User
 ```
-curl --request --location 'http://localhost:8080/api/organisations/2/provisioner/1/users' \
+curl --request POST --location 'http://localhost:8080/api/organisations/2/provisioner/1/users' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwiaWF0IjoxNTE2MjM5MDIyfQ.dG_kxtNjn60nYi_f-jZBVU7POykUom6Y8UC7As-HejA' \
 --data-raw '{
@@ -166,10 +168,17 @@ curl --request --location 'http://localhost:8080/api/organisations/2/provisioner
 }
 ```
 
+### Get inactive users to activate
+- Combine curl response with `jq`
+
+```
+curl --request GET --location 'http://localhost:8080/api/organisations/4/users?isActive=false&size=2000' | jq '[.content[] | select(.isActive == false) | .applicationId]'
+```
+
 ### Activate inactive Users
 
 ```
-curl --location --request PATCH 'http://localhost:8080/api/organisations/4/activate-users' \
+curl --request PATCH --location 'http://localhost:8080/api/organisations/4/activate-users' \
 --header 'Content-Type: application/json' \
 --data '[
     1,
