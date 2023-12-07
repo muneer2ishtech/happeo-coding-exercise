@@ -17,12 +17,12 @@ mvn clean package
 
 ### Docker build
 ```
-docker build -f Dockerfile . -t muneer2ishtech/happeo_coding_exercise_springboot:0.6.0-SNAPSHOT
+docker build -f Dockerfile . -t muneer2ishtech/happeo_coding_exercise_springboot:0.6.0
 ```
 
 #### Docker build multiple tags
 ```
-docker build -f Dockerfile . -t muneer2ishtech/happeo_coding_exercise_springboot:0.6.0-SNAPSHOT -t muneer2ishtech/happeo_coding_exercise_springboot:latest
+docker build -f Dockerfile . -t muneer2ishtech/happeo_coding_exercise_springboot:0.6.0 -t muneer2ishtech/happeo_coding_exercise_springboot:latest
 ```
 
 ## Local Run
@@ -33,7 +33,7 @@ mvn spring-boot:run
 
 ### Run using already built Docker image
 ```
-docker run -it muneer2ishtech/happeo_coding_exercise_springboot:0.6.0-SNAPSHOT
+docker run -it muneer2ishtech/happeo_coding_exercise_springboot:0.6.0
 ```
 
 ### Run using Docker composer
@@ -61,7 +61,7 @@ docker image push --all-tags muneer2ishtech/happeo_coding_exercise_springboot
 
 ### Pull from Docker Hub
 ```
-docker pull muneer2ishtech/happeo_coding_exercise_springboot:0.6.0-SNAPSHOT
+docker pull muneer2ishtech/happeo_coding_exercise_springboot:0.6.0
 ```
 
 ## Run Docker Image pulled from Docker Hub
