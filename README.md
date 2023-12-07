@@ -60,7 +60,9 @@
 - Pagination
   - Page size param works only for 1 to Integer.MAX_VALUE
     - Add param `&size=n` for page size
-  - If you want all results then setting size to zero does not work
+  - If you want to see all results
+    - then setting size to zero or -1 does not work
+    - You need send custom param `&unpaged=true`
   - Moving to different pages
     - param `&page=2` (for third page)
     - By default it fetches first page (i.e. `&page=0`)
@@ -172,7 +174,7 @@ curl --request POST --location 'http://localhost:8080/api/organisations/2/provis
 - Combine curl response with `jq`
 
 ```
-curl --request GET --location 'http://localhost:8080/api/organisations/4/users?isActive=false&size=2000' | jq '[.content[] | select(.isActive == false) | .applicationId]'
+curl --request GET --location 'http://localhost:8080/api/organisations/4/users?isActive=false&unpaged=true' | jq '[.content[] | select(.isActive == false) | .applicationId]'
 ```
 
 ### Activate inactive Users
