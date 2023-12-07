@@ -3,6 +3,7 @@ package fi.ishtech.happeo.codingexercise.security;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,6 +16,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import fi.ishtech.happeo.codingexercise.security.jwt.JwtAuthenticationEntryPoint;
 import fi.ishtech.happeo.codingexercise.security.jwt.JwtFilter;
 
 /**
@@ -24,6 +26,9 @@ import fi.ishtech.happeo.codingexercise.security.jwt.JwtFilter;
 @Configuration
 @EnableMethodSecurity
 public class WebSecurityConfig {
+
+	@Autowired
+	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
 	@Bean
 	JwtFilter jwtFilter() {
@@ -55,6 +60,7 @@ public class WebSecurityConfig {
 							.permitAll()
 						.anyRequest()
 							.authenticated())
+						.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
 			;
 		// @formatter:on
 
