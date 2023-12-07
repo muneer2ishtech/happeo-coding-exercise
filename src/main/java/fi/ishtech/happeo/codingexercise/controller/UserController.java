@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -52,21 +53,11 @@ public class UserController {
 	public ResponseEntity<Page<UserResponse>> findUsers(@PathVariable Long organisationId,
 			@RequestParam(required = false) Boolean isActive,
 			@RequestParam(name = "unpaged", required = false, defaultValue = "false") Boolean unpaged,
-			Pageable pageable) {
+			@SortDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
 
-		if (unpaged) {
-			pageable = Pageable.unpaged();
-		}
+		pageable = unpaged ? pageable == null ? Pageable.unpaged() : Pageable.unpaged(pageable.getSort()) : pageable;
 
-		Page<UserResponse> results = userService.findAllAndMapToResponse(UserSpec.of(organisationId, isActive),
-				pageable);
-
-		if (unpaged) {
-			return ResponseEntity
-					.ok(new PageImpl<UserResponse>(results.getContent()));
-		} else {
-			return ResponseEntity.ok(results);
-		}
+		return ResponseEntity.ok(userService.findAllAndMapToResponse(UserSpec.of(organisationId, isActive), pageable));
 	}
 
 	/**
