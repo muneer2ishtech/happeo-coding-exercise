@@ -1,5 +1,5 @@
 # How to get JWT to use for authentication in the application
-- Use https://jwt.io
+- Use [https://jwt.io](https://jwt.io)
 
 ## How to get JWt using simple secret (not Base64 encoded)
 ![jwt.io screenshot for simple JWT](src/main/resources/static/images/jwt_decoded_instructions.png)

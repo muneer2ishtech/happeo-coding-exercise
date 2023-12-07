@@ -1,5 +1,22 @@
 # happeo-coding-exercise
 
+## How to
+
+1. Pull Docker image from Docker Hub
+    - See [How to run Docker Image pulled from Docker Hub](./HOW-TO-TECHNICAL.md#run-docker-image-pulled-from-docker-hub)
+    - Alternatively you can pull the code from Github and build and run. See [HOW-TO-TECHNICAL.md](./HOW-TO-TECHNICAL.md)
+2. Run Following APIs from cURL, Postman (or any other API tool)
+    1. Create Provisioner Secret for Organisation
+    2. Provision New User
+        - Need JWT token
+        - See [HOW-TO-JWT.md](./HOW-TO-JWT.md)
+    3. Find inactive Users
+    4. Activate inactive Users
+
+
+- See [APIs](./README.md#APIs) and [cURL Samples](./README.md#cURL-Samples) for details
+
+
 ## Assumptions
 - No need of authentication for external admin
 - One organization is using one provisioner only
@@ -31,8 +48,8 @@
 | OpenAPI                  | None | GET   | /api-docs                                                                 | Spring generated API Documentation  |
 | Swagger                  | None | GET   | /swagger-ui.html                                                          | Swagger generated API Documentation |
 | Organisation Admin       | None | GET   | /api/provisioners                                                         | Get all existing Provisioners |
-| Organisation Admin       | None | GET   | /api/organisations/{{organisationId}}/provisioners                        | Creates Organisation and Provisioner map and a secret for it. Creates Provisioner if not present. |
-| Organisation Admin       | None | POST  | /api/organisations/{{organisationId}}/users                               | Finds Users matching the params, see [Pagination &amp; Sorting](./README.md#pagination--sorting) |
+| Organisation Admin       | None | POST  | /api/organisations/{{organisationId}}/provisioners                        | Creates Organisation and Provisioner map and a secret for it. Creates Provisioner if not present. |
+| Organisation Admin       | None | GET   | /api/organisations/{{organisationId}}/users                               | Finds Users matching the params, see [Pagination &amp; Sorting](./README.md#pagination--sorting) |
 | Organisation Admin       | None | PATCH | /api/organisations/{{organisationId}}/activate-users                      | Activates inactive users belonging to organisation. If the user is already active, it does nothing, simply ignores those user IDs. If the user does not belong to organisation, it will not be activated, simply ignores those user IDs (No error thrown) |
 | External Identity System | JWT  | POST  | /api/organisations/{{organisationId}}/provisioner/{{provisionerId}}/users | For provisioning new user by External identity system (Provisioner) |
 
@@ -148,7 +165,7 @@ curl --request --location 'http://localhost:8080/api/organisations/2/provisioner
 }
 ```
 
-### Provision New User
+### Activate inactive Users
 
 ```
 curl --location --request PATCH 'http://localhost:8080/api/organisations/4/activate-users' \
@@ -162,17 +179,3 @@ curl --location --request PATCH 'http://localhost:8080/api/organisations/4/activ
 - Success Response
   - Response Code: 200 - Ok
   - No response boy
-
-## How to
-
-### Docker Image pulled from Docker Hub
-- [How to run Docker Image pulled from Docker Hub](./HOW-TO-TECHNICAL.md#run-docker-image-pulled-from-docker-hub) without making any builds locally
-
-### Get Token (JWT) to use
-- [How to get JWT from jwt.io](./HOW-TO-JWT.md)
-
-### How to use system functionally (Business Operations)
-  - See [How-to-functional](./HOW-TO-FUNCTIONAL.md)
-
-## To find users to activate
-- `http://localhost:8080/api/organisations/{{organisationId}}/users?isActive=false&unpaged=true`
