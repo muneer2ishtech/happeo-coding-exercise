@@ -25,20 +25,21 @@
        - And create mapping table with user_id, organisation_id, provisioner_id and external_id
 - API to create organisation and provisioner mapping return Secret in response body
     - It is not safe to have secret in response body
-- Encryting Secret before storing in DB is out of scope
+- Encrypting Secret before storing in DB is out of scope
 - Sharing secrets in encrypted and secure way is out of scope
-- Authentication / Authorization not implmented for any APIs except one in challenge (i.e. provisioning of users by external identity system)
-- Did not code API to create Organisations
-  - Inserted data of some sample organisations
+- Did not code API to create Organisations, inserted data of some sample organisations
+- Authentication / Authorization not implemented for any APIs except one in challenge (i.e. provisioning of users by external identity system)
+- All JWT errors / Authentication errors are just returning 401 - Unathorized without any details of error 
 
 
 ## Improvements
 - We can create is_org_admin in user table, as all users in an organisation can be admin, and whoever is admin will have this flag as true so they can only create secrets or activate / deactivate users in their organisation.
 - Secret stored in DB without encryption, it is not safe (even though Base64 encoded), whoever has access to DB can access it. It need to be encrypted before storing and decrypted before comparing.
-- Infact it is better to use public and private key combination.
+- IMHO it is better to use public and private key combination.
   - Share public key with external identity system (provisioner)
-  - Store private key of the organisation and use it code.
-  - E.g. `JwtParserBuilder.verifyWith(SecretKey key)` we can use `JwtParserBuilder.decryptWith(PrivateKey key)`
+  - Store private key of the organisation and use it to verify the JWT
+  - E.g. instead of `JwtParserBuilder.verifyWith(SecretKey key)` we can use `JwtParserBuilder.decryptWith(PrivateKey key)`
+- Handling of JWT errors / Authentication errors can be improved to return specific details of error
 
 
 ## APIs
