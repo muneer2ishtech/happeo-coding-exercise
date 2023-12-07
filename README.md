@@ -31,8 +31,8 @@
 | OpenAPI                  | None | GET   | /api-docs                                                                 | Spring generated API Documentation  |
 | Swagger                  | None | GET   | /swagger-ui.html                                                          | Swagger generated API Documentation |
 | Organisation Admin       | None | GET   | /api/provisioners                                                         | Get all existing Provisioners |
-| Organisation Admin       | None | GET   | /api/organisations/{{organisationId}}/provisioners                        | Creates Organisation and Provisioner map and a secret for it. Creates Provisioner if not present. |
-| Organisation Admin       | None | POST  | /api/organisations/{{organisationId}}/users                               | Finds Users matching the params, see [Pagination &amp; Sorting](./README.md#pagination--sorting) |
+| Organisation Admin       | None | POST  | /api/organisations/{{organisationId}}/provisioners                        | Creates Organisation and Provisioner map and a secret for it. Creates Provisioner if not present. |
+| Organisation Admin       | None | GET   | /api/organisations/{{organisationId}}/users                               | Finds Users matching the params, see [Pagination &amp; Sorting](./README.md#pagination--sorting) |
 | Organisation Admin       | None | PATCH | /api/organisations/{{organisationId}}/activate-users                      | Activates inactive users belonging to organisation. If the user is already active, it does nothing, simply ignores those user IDs. If the user does not belong to organisation, it will not be activated, simply ignores those user IDs (No error thrown) |
 | External Identity System | JWT  | POST  | /api/organisations/{{organisationId}}/provisioner/{{provisionerId}}/users | For provisioning new user by External identity system (Provisioner) |
 
