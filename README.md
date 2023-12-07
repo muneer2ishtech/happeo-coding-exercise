@@ -148,7 +148,7 @@ curl --request --location 'http://localhost:8080/api/organisations/2/provisioner
 }
 ```
 
-### Provision New User
+### Activate inactive Users
 
 ```
 curl --location --request PATCH 'http://localhost:8080/api/organisations/4/activate-users' \
