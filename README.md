@@ -49,6 +49,117 @@
     - `&sort=firstName,DESC&sort=lastName=ASC`
   - `ASC` is optional and implied
 
+## cURL Samples
+### Create Provisioner Secret for Organisation
+
+```
+curl --request POST --location 'http://localhost:8080/api/organisations/1/provisioners' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "pkta"
+}'
+```
+- Success response
+  - Response Code:  201 - Created
+
+```
+{
+    "id": 2,
+    "organisation": {
+        "id": 2,
+        "name": "Ishtech Oy"
+    },
+    "provisioner": {
+        "id": 1,
+        "name": "pkta"
+    },
+    "encodedSecret": "ZmY3Q2lTcE9iYUMxQUg4dUVhaUI5UGMzU2VHQjJuV3V0ak9PVGxXVDBHOXNXWmRFUXMxMUlyR1Z6eG5KeDltNw==",
+    "decodedSecret": "ff7CiSpObaC1AH8uEaiB9Pc3SeGB2nWutjOOTlWT0G9sWZdEQs11IrGVzxnJx9m7"
+}
+```
+- Error Responses
+  - If `organisationId` is not valid or not present
+    - Response Code: 400 - Bad Request
+
+```
+{
+    "httpStatus": 400,
+    "error": "Invalid organisationId"
+}
+```
+  - If `organisationId` and `provisionerId` already exists (we have unique constraint for this combination)
+      - Response Code: 400 - Bad Request
+
+```
+{
+    "httpStatus": 400,
+    "error": "Provisioner already exists for Organisation"
+}
+```
+
+### Provision New User
+```
+curl --request --location 'http://localhost:8080/api/organisations/2/provisioner/1/users' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwiaWF0IjoxNTE2MjM5MDIyfQ.dG_kxtNjn60nYi_f-jZBVU7POykUom6Y8UC7As-HejA' \
+--data-raw '{
+    "email": "muneer@ishtech.fi",
+    "name": {
+        "firstName": "Muneer",
+        "lastName": "Syed"
+    },
+    "id": "1001"
+}'
+```
+- Success Response
+  - Response Code: 201 - Created
+
+```
+{
+    "email": "muneer@ishtech.fi",
+    "name": {
+        "firstName": "Muneer",
+        "lastName": "Syed"
+    },
+    "id": "1001",
+    "applicationId": "1"
+}
+```
+- Error Responses
+  - If a request comes with `email` that is already existing
+    - Response Code: 400 - Bad Request
+
+```
+{
+    "httpStatus": 400,
+    "error": "User with input email already exists"
+}
+```
+  - If a request comes with already existing external `id` for `organisationId` (we have unique constraint for this combination)
+      - Response Code: 400 - Bad Request
+
+```
+{
+    "httpStatus": 400,
+    "error": "User with input external Id already exists for organisationId"
+}
+```
+
+### Provision New User
+
+```
+curl --location --request PATCH 'http://localhost:8080/api/organisations/4/activate-users' \
+--header 'Content-Type: application/json' \
+--data '[
+    1,
+    2,
+    3
+]'
+```
+- Success Response
+  - Response Code: 200 - Ok
+  - No response boy
+
 ## How to
 
 ### Docker Image pulled from Docker Hub
