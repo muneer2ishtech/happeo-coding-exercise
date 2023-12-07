@@ -33,4 +33,4 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: muneer2ishtech/happeo_coding_exercise_springboot:0.5.0
+        tags: muneer2ishtech/happeo_coding_exercise_springboot:0.6.0
