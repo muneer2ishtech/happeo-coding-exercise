@@ -29,6 +29,7 @@
 - Sharing secrets in encrypted and secure way is out of scope
 - Did not code API to create Organisations , inserted data of some sample organisations
 - Authentication / Authorization not implemented for any APIs except one in challenge (i.e. provisioning of users by external identity system)
+- All JWT errors / Authentication errors are just returning 401 - Unathorized without any details of error 
 
 
 ## Improvements
@@ -38,6 +39,7 @@
   - Share public key with external identity system (provisioner)
   - Store private key of the organisation and use it code.
   - E.g. `JwtParserBuilder.verifyWith(SecretKey key)` we can use `JwtParserBuilder.decryptWith(PrivateKey key)`
+- Handling of JWT errors / Authentication errors can be improved to return specific details of error
 
 
 ## APIs
