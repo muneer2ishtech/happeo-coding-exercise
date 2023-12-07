@@ -11,6 +11,9 @@
 - Encryting Secret before storing in DB is out of scope
 - Sharing secrets in encrypted and secure way is out of scope
 - Authentication / Authorization not implmented for any APIs except one in challenge (i.e. provisioning of users by external identity system)
+- Did not code API to create Organisations
+  - Inserted data of some sample organisations
+
 
 ## Improvements
 - We can create is_org_admin in user table, as all users in an organisation can be admin, and whoever is admin will have this flag as true so they can only create secrets or activate / deactivate users in their organisation.
