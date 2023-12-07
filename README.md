@@ -27,9 +27,8 @@
     - It is not safe to have secret in response body
 - Encryting Secret before storing in DB is out of scope
 - Sharing secrets in encrypted and secure way is out of scope
-- Authentication / Authorization not implmented for any APIs except one in challenge (i.e. provisioning of users by external identity system)
-- Did not code API to create Organisations
-  - Inserted data of some sample organisations
+- Did not code API to create Organisations , inserted data of some sample organisations
+- Authentication / Authorization not implemented for any APIs except one in challenge (i.e. provisioning of users by external identity system)
 
 
 ## Improvements
